@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+
+    /**
+     * relation ship function
+     */
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class)->withPivot('total_quantity','total_price');
+    }
 }
