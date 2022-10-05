@@ -4,12 +4,13 @@
          Products List
         </h2>
     </x-slot>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                <!-- component -->
-<div tabindex="0" class="focus:outline-none">
+<div tabindex="0" class="focus:outline-none" id="app">
     <!-- Remove py-8 -->
     <div class="mx-auto container py-8">
         <div class="grid grid-cols-4 grid-gap-4">
@@ -28,7 +29,7 @@
                             </svg>
                         </div>
                         <div class="bg-yellow-200 py-1.5 px-6 rounded-full">
-                            <p tabindex="0" class="focus:outline-none text-xs text-yellow-700">{{$product->price}}</p>
+                            <p tabindex="0" class="focus:outline-none text-xs text-yellow-700">{{$product->formatted_price}}</p>
                         </div>
                     </div>
                     <div class="p-4">
@@ -38,9 +39,7 @@
                         </div>
                         <p tabindex="0" class="focus:outline-none text-xs text-gray-600 mt-2">{{$product->description}}</p>
                        
-                        <div class="flex items-center justify-between py-4">
-                            <button class="bg-orange-500 px-3 py-2 text-white rounded-full "> Add to Cart</button>
-                        </div>
+                       <add-to-cart :product-id="{{$product->id}}"></add-to-cart>
                     </div>
                 </div>
             </div>
@@ -53,10 +52,7 @@
     </div>
     <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
 </div>
- <script src="chrome-extension://kgejglhpjiefppelpmljglcjbhoiplfn/shadydom.js"></script>
-<script>
-    if (!window.ShadyDOM) window.ShadyDOM = { force: true, noPatch: true };
-</script>
+
             </div>
         </div>
     </div>

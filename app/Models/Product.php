@@ -23,10 +23,14 @@ class Product extends Model
      */
 
 
-     public function price():Attribute
+    /*  public function price():Attribute
      {
        return Attribute::make(
         get: fn($value)=>str_replace('.',',', $value / 100).'$'
        );
+     } */
+     public function getFormattedPriceAttribute()
+     {
+      return str_replace('.',',', $this->price / 100).'$';
      }
 }
