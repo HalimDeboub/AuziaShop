@@ -10,7 +10,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                <!-- component -->
-<div tabindex="0" class="focus:outline-none" id="app">
+<div tabindex="0" class="focus:outline-none" >
     <!-- Remove py-8 -->
     <div class="mx-auto container py-8">
         <div class="grid grid-cols-4 grid-gap-4">
@@ -40,6 +40,7 @@
                         <p tabindex="0" class="focus:outline-none text-xs text-gray-600 mt-2">{{$product->description}}</p>
                        
                        <add-to-cart :product-id="{{$product->id}}"></add-to-cart>
+
                     </div>
                 </div>
             </div>
