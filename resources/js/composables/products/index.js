@@ -1,3 +1,4 @@
+import axios from "axios";
 
     
 
@@ -8,12 +9,18 @@ export default function useProduct() {
         let response = await axios.post('/api/products', {
             productId: productId
         });
-        console.log("khra")
+        return response.data.count
         
     }
+    const getCount = async () => {
+let response = await axios.get('api/products/count'
+)
+return response.data.itemsCount 
+   }
+
     return {
         add,
-        
+        getCount 
     }
 }
     
