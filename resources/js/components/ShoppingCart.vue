@@ -28,19 +28,22 @@
               <a href="#">
                 <p class="mb-2 md:ml-4" v-text="product.name"></p>
                 <form action="" method="POST">
-                  <button type="submit" class="text-gray-700 md:ml-4">
+                  <button v-on:click.prevent="destroy(product.id)" class="text-gray-700 md:ml-4">
                     <small>(Remove item)</small>
                   </button>
                 </form>
               </a>
             </td>
-            <td class="justify-center md:justify-end md:flex mt-6">
+            <td class="justify-center md:justify-end md:flex mt-6 space-x-3">
+                <button v-on:click.prevent="decrease(product.id)"> - </button>
               <div class="w-20 h-10">
                 <div class="relative flex flex-row w-full h-8">
-                <input type="number" :value="product.quantity" 
+                <input :value="product.quantity"  readonly
                   class="w-full font-semibold text-center text-gray-700 bg-gray-200 outline-none focus:outline-none hover:text-black focus:text-black" />
                 </div>
               </div>
+              <button v-on:click.prevent="increase(product.id)"> + </button>
+
             </td>
             <td class="hidden text-right md:table-cell">
               <span class="text-sm lg:text-base font-medium" v-text="formatPrice(product.price)">
@@ -72,7 +75,7 @@
                     Total
                   </div>
                   <div class="lg:px-4 lg:py-2 m-2 lg:text-lg font-bold text-center text-gray-900">
-                    17,859.3€
+                 {{cartTotal}}
                   </div>
                 </div>
               <a href="#">
@@ -90,11 +93,49 @@
 </template>
 
 <script  setup>
-import { onMounted } from 'vue';
+import { onMounted , computed} from 'vue';
 import useProduct from '../composables/products'
 import {formatPrice} from '../helper'
+import emitter from 'tiny-emitter/instance'
 
-const {products, getProducts} = useProduct()
+
+
+
+
+const {
+    products, 
+    getProducts, 
+    increaseQuantity,
+    decreaseQuantity,
+    destroyProduct,
+    cartCount
+} = useProduct()
+
+
+const increase = async (id)=>{
+await increaseQuantity(id)
+await getProducts()
+emitter.emit('cartCountUpdated', cartCount.value);
+
+}
+
+const  cartTotal = computed(()=>{
+    let price = Object.values(products.value).reduce((acc,product)=>acc += product.price * product.quantity,0)
+    return formatPrice(price)
+})
+const decrease =async (id)=>{
+    await decreaseQuantity(id)
+    await getProducts()
+    emitter.emit('cartCountUpdated', cartCount.value);
+
+
+}
+const destroy = async (id)=>{
+    await destroyProduct(id)
+    await getProducts()
+    emitter.emit('cartCountUpdated', cartCount.value);
+
+}
 onMounted(async()=>{
   await getProducts()
    

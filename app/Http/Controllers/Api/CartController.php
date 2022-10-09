@@ -17,8 +17,11 @@ class CartController extends Controller
     public function index()
     {
         $content = (new CartRepository())->content();
+        $cartCount = (new CartRepository())->count();
+
         return response()->json([
-            'cartContent'=>$content
+            'cartContent'=>$content,
+            'cartCount'=>$cartCount
         ]);
     }
 
@@ -68,7 +71,8 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        (new CartRepository)->remove($id);
+
     }
 
     public function count()
@@ -78,4 +82,16 @@ class CartController extends Controller
             'itemsCount'=>$items
         ]);
     }
+
+
+    public function increase($id)
+    {
+        (new CartRepository)->increase($id);
+    }
+
+    public function decrease($id)
+    {
+        (new CartRepository)->decrease($id);
+    }
+
 }
